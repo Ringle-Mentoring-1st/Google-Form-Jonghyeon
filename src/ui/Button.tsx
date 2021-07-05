@@ -1,0 +1,33 @@
+import React, { ReactChild, ReactChildren } from 'react';
+
+interface ButtonProps {
+  variant?: 'outlined';
+  color?: 'primary' | 'secondary' | 'default';
+  size?: 'large' | 'medium' | 'small';
+  fill?: boolean;
+  onClick?: () => {} | void;
+  children: ReactChild | ReactChildren;
+  [x: string]: any;
+}
+
+export default function Button({
+  variant,
+  color,
+  size,
+  fill,
+  children,
+  onClick,
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      className={`button ${size} ${fill ? 'filled' : ''} ${color} ${
+        variant ? variant : ''
+      }`}
+      onClick={onClick}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
