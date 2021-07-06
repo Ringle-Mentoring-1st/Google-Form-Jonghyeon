@@ -1,13 +1,43 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Button from '../ui/Button';
 import Container from '../ui/Container';
-// Components
 import LogoutButton from './LogoutButton';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { db, nowSecond } from '../utils/firebase';
+import { addForm } from '../store/slices/formSlice';
+import * as Icon from 'heroicons-react';
 
 interface NavBarProps {
   logoSrc: string;
 }
 
 function NavBar({ logoSrc }: NavBarProps) {
+  const { uid } = useAppSelector(state => state.user.userProfile);
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const createForm = () => {
+    const now = nowSecond();
+    const newForm = {
+      title: '',
+      creator: uid,
+      createdAt: now,
+      editedAt: now,
+      questions: [],
+    };
+    db.collection('forms')
+      .add(newForm)
+      .then(doc => {
+        dispatch(addForm(newForm));
+        history.push(`/form/${doc.id}`);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  if (!uid) return <div></div>;
+
   return (
     <div>
       <Container>
@@ -16,7 +46,7 @@ function NavBar({ logoSrc }: NavBarProps) {
             display: 'flex',
             justifyContent: 'space-between',
             height: 60,
-            padding: '16px 0',
+            padding: 16,
           }}
         >
           <Link aria-label="logo" to="/form/list">
@@ -28,6 +58,11 @@ function NavBar({ logoSrc }: NavBarProps) {
               alignItems: 'center',
             }}
           >
+            <li>
+              <Button onClick={createForm} size="small" color="primary">
+                <Icon.DocumentAdd />
+              </Button>
+            </li>
             <li>
               <LogoutButton />
             </li>

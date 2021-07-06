@@ -1,10 +1,12 @@
-import { userReducer } from './slices';
+import { formReducer, uiReducer, userReducer } from './slices';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const rootReducer = combineReducers({
   user: userReducer,
+  form: formReducer,
+  ui: uiReducer,
 });
 
 const persistConfig = {
