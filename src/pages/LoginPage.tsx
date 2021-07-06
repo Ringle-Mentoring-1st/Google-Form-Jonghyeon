@@ -59,39 +59,60 @@ function LoginPage() {
   };
 
   return (
-    <Fragment>
-      <div className="flexbox">
-        <div className="title">
-          <img src={Logo} alt="logo" />
-          <h1>로그인하고 친구들과 커피챗</h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '90vh',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: 'auto',
+        }}
+      >
+        <div>
+          <img src={Logo} alt="logo" style={{ width: 150 }} />
         </div>
-        <form onSubmit={e => submitHandler(e)}>
-          <TextInput
-            type="text"
-            value={email}
-            onChange={e => emailChangeHandler(e)}
-            placeholder="이메일을 입력해주세요"
-            fill
-          />
-          <TextInput
-            type="password"
-            value={pw}
-            onChange={e => passwordChangeHandler(e)}
-            placeholder="비밀번호를 입력해주세요"
-            fill
-          />
-          <Button fill color="primary">
-            로그인하기
-          </Button>
-        </form>
-        <p>
-          아직 회원이 아니라면?{' '}
-          <Link to="/signup">
-            <span>회원가입하기</span>
-          </Link>
-        </p>
+        <h1>
+          로그인하고
+          <br />
+          궁금증을 해결하세요
+        </h1>
       </div>
-    </Fragment>
+      <form onSubmit={e => submitHandler(e)}>
+        <TextInput
+          type="text"
+          value={email}
+          onChange={e => emailChangeHandler(e)}
+          placeholder="이메일을 입력해주세요"
+          fill
+          style={{ marginBottom: 12 }}
+        />
+        <TextInput
+          type="password"
+          value={pw}
+          onChange={e => passwordChangeHandler(e)}
+          placeholder="비밀번호를 입력해주세요"
+          fill
+          style={{ marginBottom: 12 }}
+        />
+        <Button fill color="primary">
+          로그인하기
+        </Button>
+      </form>
+      <p>
+        아직 회원이 아니라면?{' '}
+        <Link to="/signup">
+          <span>회원가입하기</span>
+        </Link>
+      </p>
+    </div>
   );
 }
 

@@ -16,7 +16,7 @@ function NavBar({ logoSrc }: NavBarProps) {
             display: 'flex',
             justifyContent: 'space-between',
             height: 60,
-            padding: 16,
+            padding: '16px 0',
           }}
         >
           <Link aria-label="logo" to="/form/list">

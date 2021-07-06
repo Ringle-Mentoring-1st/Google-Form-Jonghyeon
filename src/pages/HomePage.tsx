@@ -8,28 +8,45 @@ import Logo from '../assets/logo512.png';
 
 function HomePage() {
   return (
-    <Fragment>
-      <div className="flexbox">
-        <div className="title">
-          <img src={Logo} alt="logo" />
-          <h1>안녕하세요? 폼생폼사입니다</h1>
-          <h3>궁금함에 살고 죽는 여러분을 환영합니다</h3>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '90vh',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: 'auto',
+        }}
+      >
+        <div>
+          <img src={Logo} alt="logo" style={{ width: 200 }} />
         </div>
-        <div className="buttons">
-          <Link to="/login">
-            <Button color="primary" size="medium" fill>
-              로그인하고 메시지보내기
-            </Button>{' '}
-          </Link>
-          <p>
-            아직 회원이 아니라면?{' '}
-            <Link to="/signup">
-              <span>회원가입하기</span>
-            </Link>
-          </p>
-        </div>
+        <h1>
+          궁금함에 살고 <br />
+          궁금함에 죽다
+        </h1>
+        <h3>폼생폼사에 오신 것을 환영합니다</h3>
       </div>
-    </Fragment>
+
+      <Link to="/login">
+        <Button color="primary" size="medium" fill>
+          로그인하고 설문지 만들기
+        </Button>{' '}
+      </Link>
+      <p>
+        아직 회원이 아니라면?{' '}
+        <Link to="/signup">
+          <span>회원가입하기</span>
+        </Link>
+      </p>
+    </div>
   );
 }
 

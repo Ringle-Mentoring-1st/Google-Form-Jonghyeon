@@ -24,6 +24,10 @@ h6 {
   margin: 8px;
 }
 
+h1 {
+  font-size: 3rem;
+}
+
 a {
   font-weight: 900;
   color: white;

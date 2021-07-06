@@ -118,67 +118,89 @@ function SignupPage() {
   const { email, pw, nickName, signupPath } = signupPayload;
 
   return (
-    <Fragment>
-      <div className="flexbox">
-        <div className="title">
-          <img src={Logo} alt="logo" />
-          <h1>회원가입하고 친구들과 커피챗</h1>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '90vh',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          margin: 'auto',
+        }}
+      >
+        <div>
+          <img src={Logo} alt="logo" style={{ width: 150 }} />
         </div>
-        <form onSubmit={onSubmitHandler}>
-          <TextInput
-            type="text"
-            value={email}
-            onChange={e => onChange(e, 'email')}
-            placeholder="이메일을 입력해주세요"
-            fill
-          />
-          <TextInput
-            type="password"
-            value={pw}
-            onChange={e => onChange(e, 'pw')}
-            placeholder="비밀번호를 입력해주세요"
-            fill
-          />
-          <TextInput
-            type="text"
-            value={nickName}
-            onChange={e => onChange(e, 'nickName')}
-            placeholder="닉네임를 입력해주세요"
-            fill
-          />
-          <select
-            name="pets"
-            value={signupPath}
-            onChange={e => onChange(e, 'signupPath')}
-          >
-            <option value="">어떤 경로로 커피챗을 알게 됐나요?</option>
-            <option value="ad">광고</option>
-            <option value="search">검색</option>
-            <option value="etc">기타</option>
-          </select>
-          <br />
-          <label htmlFor="agree">
-            이용약관 및 개인정보처리방침에 동의하십니까?
-          </label>
-          <input
-            id="agree"
-            type="checkbox"
-            checked={isAgreeInfo}
-            onChange={isAgreeInfoChangeHandler}
-          />
-
-          <Button color="primary" fill onClick={() => onSubmitHandler}>
-            회원가입하기
-          </Button>
-        </form>
-        <p>
-          이미 회원이라면?{' '}
-          <Link to="/login">
-            <span>로그인하기</span>
-          </Link>
-        </p>
+        <h1>
+          회원가입하고 <br /> 친구들과 폼생폼사
+        </h1>
       </div>
-    </Fragment>
+      <form onSubmit={onSubmitHandler}>
+        <TextInput
+          type="text"
+          value={email}
+          onChange={e => onChange(e, 'email')}
+          placeholder="이메일을 입력해주세요"
+          fill
+          style={{ marginBottom: 12 }}
+        />
+        <TextInput
+          type="password"
+          value={pw}
+          onChange={e => onChange(e, 'pw')}
+          placeholder="비밀번호를 입력해주세요"
+          fill
+          style={{ marginBottom: 12 }}
+        />
+        <TextInput
+          type="text"
+          value={nickName}
+          onChange={e => onChange(e, 'nickName')}
+          placeholder="닉네임를 입력해주세요"
+          fill
+          style={{ marginBottom: 12 }}
+        />
+        <select
+          name="pets"
+          value={signupPath}
+          onChange={e => onChange(e, 'signupPath')}
+          style={{ marginBottom: 12 }}
+        >
+          <option value="">어떤 경로로 커피챗을 알게 됐나요?</option>
+          <option value="ad">광고</option>
+          <option value="search">검색</option>
+          <option value="etc">기타</option>
+        </select>
+        <br />
+        <label htmlFor="agree">
+          이용약관 및 개인정보처리방침에 동의하십니까?
+        </label>
+        <input
+          id="agree"
+          type="checkbox"
+          checked={isAgreeInfo}
+          onChange={isAgreeInfoChangeHandler}
+          style={{ marginBottom: 12 }}
+        />
+
+        <Button color="primary" fill onClick={() => onSubmitHandler}>
+          회원가입하기
+        </Button>
+      </form>
+      <p>
+        이미 회원이라면?{' '}
+        <Link to="/login">
+          <span>로그인하기</span>
+        </Link>
+      </p>
+    </div>
   );
 }
 
