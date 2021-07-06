@@ -46,12 +46,11 @@ const StyledTextInputContainer = styled.div<TextInputProps>`
   display: ${({ fill }) => (fill ? 'flex' : 'inline-block')};
   flex-direction: column;
   border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
 `;
 
 const StyledTextInput = styled.input<TextInputProps>`
-  color: white;
   font-weight: 700;
   padding: 16px 24px;
   background: none;
@@ -67,7 +66,7 @@ const StyledTextInputUnderBar = styled.div<{ focus: boolean }>`
   right: 0;
   bottom: 0;
   height: 2px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(98, 0, 255, 0.3);
   width: ${({ focus }) => (focus ? '100%' : '0%')};
   transition: 0.1s all linear;
   margin: auto;

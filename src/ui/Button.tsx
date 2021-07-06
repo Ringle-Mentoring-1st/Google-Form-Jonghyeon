@@ -51,6 +51,14 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 16px;
   transition: box-shadow 0.2s, opacity 0.2s;
   cursor: pointer;
+  background: ${({ color }) => {
+    if (color === 'primary') return '#5f5cee';
+    if (color === 'secondary') return '#ebddaa';
+    if (color === 'default') return 'white';
+  }};
+  color: ${({ color }) => {
+    if (color === 'primary') return 'white';
+  }};
 
   &.outlined {
     border: 1px solid white;

@@ -14,5 +14,4 @@ export default Container;
 const StyledContainer = styled.div<ContainerProps>`
   max-width: 800px;
   margin: auto;
-  padding: 0 16px;
 `;
