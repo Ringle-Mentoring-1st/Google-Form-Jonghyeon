@@ -33,6 +33,9 @@ function TextInput({
         value={value}
         placeholder={placeholder}
         fill
+        onKeyUp={(e: any) => {
+          if (e.keyCode == 27) e.target.blur();
+        }}
       />
       <StyledTextInputUnderBar focus={focus} />
     </StyledTextInputContainer>
