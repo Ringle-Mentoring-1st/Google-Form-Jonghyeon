@@ -1,4 +1,4 @@
-import { Form } from './../../model/Forms';
+import { Form, Question } from './../../model/Forms';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
 
@@ -30,10 +30,32 @@ export const formSlice = createSlice({
     addForm: (state, { payload }: PayloadAction<Form>) => {
       state.list = [...state.list, payload];
     },
+    setForm: (state, { payload }: PayloadAction<Form>) => {
+      state.form = { ...payload };
+    },
+    setFormTitle: (state, { payload }: PayloadAction<string>) => {
+      state.form.title = payload;
+    },
+    addQuestion: (state, { payload }: PayloadAction<Question>) => {
+      state.form.questions.push(payload);
+    },
+    setQuestionTitle: (
+      state,
+      { payload }: PayloadAction<{ newTitle: string; index: number }>
+    ) => {
+      state.form.questions[payload.index].title = payload.newTitle;
+    },
   },
 });
 
-export const { getFormList, addForm } = formSlice.actions;
+export const {
+  getFormList,
+  addForm,
+  setForm,
+  setFormTitle,
+  addQuestion,
+  setQuestionTitle,
+} = formSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 
