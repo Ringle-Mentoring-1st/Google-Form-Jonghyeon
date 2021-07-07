@@ -28,7 +28,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://formsaengformsa.com --acl public-read",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E2915YSTHAJCV4 --paths /static /asset-manifest.json /favicon.ico /index.html /service-worker.js /logo512.png /manifest.json /robot.txt"
   },
   "eslintConfig": {
     "extends": "react-app"

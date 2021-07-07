@@ -2,6 +2,7 @@ import React from 'react';
 import { useAppDispatch } from '../store/hooks';
 import { logout } from '../store/slices/userSlice';
 import Button from '../ui/Button';
+import * as Icon from 'heroicons-react';
 // Utils
 import { app } from '../utils/firebase';
 
@@ -15,8 +16,8 @@ function LogoutButton() {
   };
 
   return (
-    <Button variant="outlined" color="primary" size="small" onClick={logOut}>
-      로그아웃하기
+    <Button variant="outlined" color="default" size="small" onClick={logOut}>
+      <Icon.Logout />
     </Button>
   );
 }

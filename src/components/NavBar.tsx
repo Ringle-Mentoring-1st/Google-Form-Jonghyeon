@@ -12,7 +12,7 @@ interface NavBarProps {
 }
 
 function NavBar({ logoSrc }: NavBarProps) {
-  const { uid } = useAppSelector(state => state.user.userProfile);
+  const { uid } = useAppSelector((state) => state.user.userProfile);
   const history = useHistory();
   const dispatch = useAppDispatch();
 
@@ -27,11 +27,11 @@ function NavBar({ logoSrc }: NavBarProps) {
     };
     db.collection('forms')
       .add(newForm)
-      .then(doc => {
+      .then((doc) => {
         dispatch(addForm(newForm));
-        history.push(`/form/${doc.id}`);
+        history.push(`/form/${doc.id}/creator`);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -59,7 +59,12 @@ function NavBar({ logoSrc }: NavBarProps) {
             }}
           >
             <li>
-              <Button onClick={createForm} size="small" color="primary">
+              <Button
+                onClick={createForm}
+                size="small"
+                color="primary"
+                style={{ marginRight: 12 }}
+              >
                 <Icon.DocumentAdd />
               </Button>
             </li>

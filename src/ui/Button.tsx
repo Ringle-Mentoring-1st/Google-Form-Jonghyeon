@@ -47,41 +47,43 @@ const StyledButton = styled.button<ButtonProps>`
     if (size === 'small') return '12px 20px';
   }};
   width: ${({ fill }) => (fill ? '100%' : undefined)};
-  border: 0;
   border-radius: 16px;
   transition: box-shadow 0.2s, opacity 0.2s;
   cursor: pointer;
-  background: ${({ color }) => {
+  background: ${({ color, variant }) => {
+    if (variant === 'outlined') return 0;
     if (color === 'primary') return '#5f5cee';
     if (color === 'secondary') return '#ebddaa';
+    if (color === 'default') return '#7c7c7c';
+  }};
+  color: ${({ color, variant }) => {
+    if (variant === 'outlined') {
+      if (color === 'primary') return '#5f5cee';
+      if (color === 'secondary') return '#ebddaa';
+      if (color === 'default') return '#7c7c7c';
+    }
+    if (color === 'primary') return 'white';
     if (color === 'default') return 'white';
   }};
-  color: ${({ color }) => {
-    if (color === 'primary') return 'white';
+  box-shadow: ${({ color, variant }) => {
+    if (variant === 'outlined') {
+      if (color === 'primary') return '0 0 0 2px #5f5cee inset';
+      if (color === 'secondary') return '0 0 0 2px #ebddaa inset';
+      if (color === 'default') return '0 0 0 2px #7c7c7c inset';
+    }
   }};
-
-  &.outlined {
-    border: 1px solid white;
-
-    &.primary {
-      color: #5f5cee;
-      background: 0;
-      border: 1px solid #5f5cee;
-    }
-    &.secondary {
-      color: #ebddaa;
-      background: 0;
-      border: 1px solid #ebddaa;
-    }
-    &.default {
-      color: white;
-      background: 0;
-      border: 1px solid white;
-    }
-  }
+  border: 0;
 
   &:hover {
-    box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+    box-shadow: ${({ color, variant }) => {
+      if (variant === 'outlined') {
+        if (color === 'primary') return '0 0 0 2px #5f5cee inset';
+        if (color === 'secondary') return '0 0 0 2px #ebddaa inset';
+        if (color === 'default') return '0 0 0 2px #7c7c7c inset';
+      } else {
+        return '0 0 11px rgba(33, 33, 33, 0.2)';
+      }
+    }};
     opacity: 0.9;
   }
 `;
