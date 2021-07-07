@@ -4,6 +4,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import FormListPage from './pages/FormListPage';
+import FormCreatorPage from './pages/FormCreatorPage';
+import FormResponsePage from './pages/FormResponsePage';
 import FormPage from './pages/FormPage';
 // Store
 import { useAppSelector } from './store/hooks';
@@ -14,7 +16,7 @@ import NavBar from './components/NavBar';
 import Logo from './assets/logo512.png';
 
 function Routes() {
-  const userProfile = useAppSelector(state => state.user.userProfile);
+  const userProfile = useAppSelector((state) => state.user.userProfile);
   return (
     <Router>
       {userProfile.uid && <NavBar logoSrc={Logo} />}
@@ -24,7 +26,17 @@ function Routes() {
           <Route path="/login" component={LoginPage} exact />
           <Route path="/signup" component={SignupPage} exact />
           <Route path="/form/list" component={FormListPage} exact />
-          <Route path="/form/:formId" component={FormPage} exact />
+          <Route
+            path="/form/:formId/creator"
+            component={FormCreatorPage}
+            exact
+          />
+          <Route
+            path="/form/:formId/response"
+            component={FormResponsePage}
+            exact
+          />
+          <Route path="/form/:formId/" component={FormPage} exact />
         </Switch>
       </Container>
     </Router>
