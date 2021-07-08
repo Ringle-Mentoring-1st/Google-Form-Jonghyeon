@@ -16,6 +16,7 @@ function TextArea({
   value,
   placeholder,
   fill = false,
+  onChange,
   ...props
 }: TextAreaProps) {
   const [focus, setFocus] = useState(false);
@@ -29,6 +30,7 @@ function TextArea({
         onBlur={() => {
           setFocus(false);
         }}
+        onChange={onChange}
         type={type}
         value={value}
         placeholder={placeholder}

@@ -1,12 +1,14 @@
 export type Questions = Question[];
 
 export interface Question {
-  questionType: 'text' | 'checkbox' | 'radio';
+  questionType: QuestionType;
   title: string;
   subtitle: string;
   uuid: string;
-  options?: Option[] | [];
+  options: Option[];
 }
+
+export type QuestionType = 'text' | 'checkbox' | 'radio';
 
 export interface Option {
   text: string;

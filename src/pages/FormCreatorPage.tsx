@@ -51,7 +51,10 @@ function FormPage() {
       title: '',
       subtitle: '',
       uuid: '',
-      options: [],
+      options: [
+        { text: '', uuid: '' },
+        { text: '', uuid: '' },
+      ],
     } as Question;
     dispatch(addQuestion(newQuestion));
   };
@@ -64,7 +67,7 @@ function FormPage() {
       .doc(formId)
       .update(newForm)
       .then(() => {
-        console.log('잘 저장되었습니다.');
+        alert('성공적으로 저장되었습니다.🥳');
       })
       .catch((error) => {
         console.log(error);
@@ -95,7 +98,7 @@ function FormPage() {
         </ul>
 
         <Button
-          color="primary"
+          color="secondary"
           onClick={addQuestionHandler}
           style={{ marginTop: 16 }}
         >
@@ -120,7 +123,7 @@ function FormPage() {
             gap: 8,
           }}
         >
-          임시로 저장하기
+          저장하기
           <Icon.BookOpen />
         </span>
       </Button>

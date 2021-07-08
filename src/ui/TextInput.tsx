@@ -4,11 +4,10 @@ import styled from 'styled-components';
 interface TextInputProps {
   type?: 'text' | 'password' | 'checkbox';
   value?: string;
-
   placeholder?: string;
   fill?: boolean;
   [props: string]: any;
-  onChange(e: any): any;
+  onChange?(e: any): any;
 }
 
 function TextInput({
@@ -16,6 +15,7 @@ function TextInput({
   value,
   placeholder,
   fill = false,
+  onChange,
   ...props
 }: TextInputProps) {
   const [focus, setFocus] = useState(false);
@@ -29,10 +29,10 @@ function TextInput({
         onBlur={() => {
           setFocus(false);
         }}
+        onChange={onChange}
         type={type}
         value={value}
         placeholder={placeholder}
-        fill
         onKeyUp={(e: any) => {
           if (e.keyCode == 27) e.target.blur();
         }}
@@ -47,6 +47,7 @@ export default TextInput;
 const StyledTextInputContainer = styled.div<TextInputProps>`
   position: relative;
   display: ${({ fill }) => (fill ? 'flex' : 'inline-block')};
+  flex: ${({ fill }) => (fill ? 1 : '')};
   flex-direction: column;
   border-radius: 16px;
   background-color: rgba(0, 0, 0, 0.1);
