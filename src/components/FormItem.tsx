@@ -1,11 +1,10 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form } from '../model/Forms';
 import moment from 'moment';
 import 'moment/locale/ko';
 import * as Icon from 'heroicons-react';
-import Button from '../ui/Button';
+import ClipboardCopyButton from './ClipboardCopyButton';
 
 interface FormItem {
   form: Form;
@@ -20,21 +19,43 @@ function FormItem({ form }: FormItem) {
   const editedAtString = `${moment(new Date(form.editedAt * 1000)).fromNow()} ${
     form.editedAt !== form.createdAt ? '수정됨' : ''
   }`;
+
   return (
     <StyledItemContainer>
-      <StyledItemCard onClick={clickItemHandler}>
+      <StyledItemCard onClick={clickItemHandler} isCompleted={form.isCompleted}>
         <div style={{ display: 'flex' }}>
           <Icon.DocumentText size={30} style={{ color: 'lightgray' }} />
           <div>
             <h2 style={{ letterSpacing: -0.5 }}>
               {form.title ? form.title : '무제'}
             </h2>
-            <h6>{editedAtString}</h6>
+
+            {form.isCompleted ? (
+              <h6>{moment(new Date(form.editedAt * 1000)).fromNow()}에 완성</h6>
+            ) : (
+              <h6>{editedAtString}</h6>
+            )}
           </div>
         </div>
-        <Button color="secondary" size="small" fill>
-          링크 복사
-        </Button>
+        {form.isCompleted && (
+          <ClipboardCopyButton
+            isCompleted={form.isCompleted}
+            copyText={`http://formsaengformsa.com/form/${form.uuid}/response`}
+            color="secondary"
+            size="small"
+            fill
+          >
+            <span
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Icon.Link size={18} /> 링크 복사하기
+            </span>
+          </ClipboardCopyButton>
+        )}
       </StyledItemCard>
     </StyledItemContainer>
   );
@@ -47,7 +68,7 @@ const StyledItemContainer = styled.li`
   text-align: left;
 `;
 
-const StyledItemCard = styled.div`
+const StyledItemCard = styled.div<{ isCompleted: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

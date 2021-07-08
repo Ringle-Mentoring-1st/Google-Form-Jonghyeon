@@ -6,7 +6,7 @@ interface ButtonProps {
   color?: 'primary' | 'secondary' | 'default';
   size?: 'large' | 'medium' | 'small' | 'default';
   fill?: boolean;
-  onClick?: () => {} | void;
+  onClick?: (e?: any) => {} | void;
   children: ReactChild | ReactChildren;
   [x: string]: any;
 }
@@ -96,4 +96,24 @@ const StyledButton = styled.button<ButtonProps>`
     }};
     opacity: 0.9;
   }
+
+  background: ${({ isCompleted }) => {
+    if (isCompleted)
+      return 'linear-gradient(-45deg, #c1bbff, #ffd3f1, #ffecda, #fff9e2)';
+  }};
+  color: ${({ isCompleted }) => {
+    if (isCompleted) return '#390094bd';
+  }};
+  background-size: 400% 400%;
+  animation: gradient 4s ease infinite;
+  ${`@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }`}
 `;

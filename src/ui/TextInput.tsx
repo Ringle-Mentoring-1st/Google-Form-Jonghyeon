@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 interface TextInputProps {
-  type?: 'text' | 'password' | 'checkbox';
+  type?: 'text' | 'password';
   value?: string;
   placeholder?: string;
   fill?: boolean;

@@ -10,6 +10,7 @@ interface FormState {
 const initialState: FormState = {
   list: [],
   form: {
+    isCompleted: false,
     title: '',
     createdAt: 0,
     creator: '',
@@ -23,6 +24,10 @@ export const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
+    clearForm: (state) => {
+      state.list = initialState.list;
+      state.form = initialState.form;
+    },
     getFormList: (state, { payload }: PayloadAction<Form[]>) => {
       const sorted = payload.sort((a, b) => b.editedAt - a.editedAt);
       state.list = [...sorted];
@@ -62,15 +67,25 @@ export const formSlice = createSlice({
     ) => {
       state.form.questions[payload.index].questionType = payload.newType;
     },
-    addOption: (state, { payload }: PayloadAction<number>) => {
-      const newOption = { text: '', uuid: '' };
-      state.form.questions[payload].options.push(newOption);
+    addOption: (
+      state,
+      { payload }: PayloadAction<{ indexQuestion: number; newOption: Option }>
+    ) => {
+      state.form.questions[payload.indexQuestion].options.push(
+        payload.newOption
+      );
     },
     removeOption: (
       state,
-      { payload }: PayloadAction<{ questionIndex: number; optionIndex: number }>
+      {
+        payload,
+      }: PayloadAction<{
+        indexQuestion: number;
+        optionIndex: number;
+        optionUuid: string;
+      }>
     ) => {
-      state.form.questions[payload.questionIndex].options.splice(
+      state.form.questions[payload.indexQuestion].options.splice(
         payload.optionIndex,
         1
       );
@@ -92,6 +107,7 @@ export const formSlice = createSlice({
 });
 
 export const {
+  clearForm,
   getFormList,
   addForm,
   setForm,
@@ -105,7 +121,5 @@ export const {
   removeOption,
   setOptionText,
 } = formSlice.actions;
-
-export const selectUser = (state: RootState) => state.user;
 
 export default formSlice.reducer;

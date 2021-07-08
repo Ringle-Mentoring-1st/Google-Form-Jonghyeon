@@ -13,6 +13,16 @@ import TextArea from '../ui/TextArea';
 import TextInput from '../ui/TextInput';
 import * as Icon from 'heroicons-react';
 import MarkupSwitchByType from './MarkupSwitchByType';
+import {
+  QuestionCard,
+  QuestionContent,
+  QuestionIndex,
+  QuestionTitle,
+  QuestionTitleDevider,
+  TopWindow,
+  TypeOption,
+  TypeSelect,
+} from '../ui/StyledComponents';
 
 interface QuestionProps {
   question: Question;
@@ -90,52 +100,3 @@ function QuestionItem({ question, index }: QuestionProps) {
 }
 
 export default QuestionItem;
-
-const QuestionCard = styled.li`
-  background: white;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-`;
-
-const QuestionContent = styled.div`
-  padding: 8px 16px 16px 16px;
-`;
-
-const QuestionIndex = styled.h3`
-  flex: 1;
-  text-align: left;
-  padding-left: 8px;
-`;
-
-const TopWindow = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  padding: 16px 16px 0 16px;
-`;
-
-const QuestionTitleDevider = styled.div`
-  display: flex;
-`;
-
-const QuestionTitle = styled.div`
-  flex: 1;
-`;
-
-const TypeSelect = styled.select`
-  appearance: none;
-  background-color: white;
-  border: 2px solid lightgray;
-  border-radius: 16px;
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: inherit;
-  line-height: inherit;
-  outline: none;
-  height: 40px;
-`;
-const TypeOption = styled.option`
-  appearance: none;
-`;

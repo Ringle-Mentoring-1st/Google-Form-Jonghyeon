@@ -1,16 +1,17 @@
-import { ChangeEvent, Fragment, useState } from 'react';
-import { Option, Question } from '../model/Forms';
+import { ChangeEvent, Fragment } from 'react';
+import { Option, Question, QuestionType } from '../model/Forms';
 import Button from '../ui/Button';
 import TextArea from '../ui/TextArea';
 import ChoiceInput from './ChoiceInput';
 import * as Icon from 'heroicons-react';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   addOption,
   removeOption,
   setOptionText,
-  setQuestionTitle,
 } from '../store/slices/formSlice';
+import { _uuid } from '../utils/uuid';
+import { setOptionAnswer, setTextAnswer } from '../store/slices/responseSlice';
 
 interface MarkupSwitchByTypeProps {
   question: Question;
@@ -24,13 +25,12 @@ function MarkupSwitchByType({
   ...props
 }: MarkupSwitchByTypeProps) {
   let markup = null;
-  const [indexSelectedRadio, setIndexSelectedRadio] = useState(1);
+
+  const response = useAppSelector((state) => state.response);
+
+  const isCompleted = useAppSelector((state) => state.form.form.isCompleted);
 
   const dispatch = useAppDispatch();
-
-  const changeTextArea = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setQuestionTitle({ newTitle: e.target.value, index: index }));
-  };
 
   const choiceTextInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -41,80 +41,112 @@ function MarkupSwitchByType({
   };
 
   const addOptionClickHandler = () => {
-    dispatch(addOption(index));
+    const newOption = { text: '', uuid: _uuid() } as Option;
+    dispatch(addOption({ indexQuestion: index, newOption }));
   };
 
-  const removeOptionClickHandler = (optionIndex: number) => {
-    dispatch(removeOption({ questionIndex: index, optionIndex }));
+  const removeOptionClickHandler = (
+    optionIndex: number,
+    optionUuid: string
+  ) => {
+    dispatch(removeOption({ indexQuestion: index, optionIndex, optionUuid }));
+  };
+
+  const textAnswerHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(
+      setTextAnswer({
+        questionUuid: question.uuid,
+        text: e.target.value,
+      })
+    );
+  };
+
+  const choiceAnswerHandler = (optionUuid: string) => {
+    dispatch(
+      setOptionAnswer({
+        questionUuid: question.uuid,
+        optionUuid,
+        questionType: question.questionType,
+      })
+    );
   };
 
   switch (question.questionType) {
     case 'text':
+      const indexTextQuestion = response.questions.findIndex(
+        (res) => res.uuid === question.uuid
+      );
       markup = (
-        <div {...props}>
-          <TextArea
-            style={{ marginTop: 12 }}
-            onChange={(e) => changeTextArea(e)}
-            placeholder="이곳에 설문 대상자가 답변을 입력하게 됩니다."
-            fill
-          />
-        </div>
+        <TextArea
+          value={response.questions[indexTextQuestion]?.textAnswer}
+          style={{ marginTop: 12 }}
+          onChange={(e) => textAnswerHandler(e)}
+          placeholder="이곳에 입력해주세요"
+          fill
+        />
       );
       break;
-
     case 'radio':
       const radioOptions = question.options as Option[];
-      markup = (
-        <div {...props}>
-          {radioOptions.map((option, index) => (
-            <ChoiceInput
-              isSelected={index === indexSelectedRadio}
-              value={option.text}
-              choiceType={question.questionType}
-              placeholder="선택지를 입력해주세요"
-              onChangeTextInput={(e) => choiceTextInputChange(e, index)}
-              onClickRemoveOptionButton={() => removeOptionClickHandler(index)}
-            />
-          ))}
-        </div>
+      const indexRadioQuestion = response.questions.findIndex(
+        (res) => res.uuid === question.uuid
       );
+      markup = radioOptions.map((option, indexOption) => (
+        <ChoiceInput
+          isSelected={
+            response.questions[indexRadioQuestion]?.answer[0] === option.uuid
+          }
+          value={option.text}
+          choiceType={question.questionType}
+          placeholder="선택지를 입력해주세요"
+          onChangeCheck={() => choiceAnswerHandler(option.uuid)}
+          onChangeTextInput={(e) => choiceTextInputChange(e, indexOption)}
+          onClickRemoveOptionButton={() =>
+            removeOptionClickHandler(indexOption, option.uuid)
+          }
+        />
+      ));
       break;
-
     case 'checkbox':
       const checkboxOptions = question.options as Option[];
-      markup = (
-        <div {...props}>
-          {checkboxOptions.map((option, index) => (
-            <ChoiceInput
-              isSelected={true}
-              value={option.text}
-              choiceType={question.questionType}
-              placeholder="선택지를 입력해주세요"
-              onChangeTextInput={(e) => choiceTextInputChange(e, index)}
-              onClickRemoveOptionButton={() => removeOptionClickHandler(index)}
-            />
-          ))}
-        </div>
+      const indexCheckboxQuestion = response.questions.findIndex(
+        (res) => res.uuid === question.uuid
       );
+      markup = checkboxOptions.map((option, indexOption) => (
+        <ChoiceInput
+          isSelected={response.questions[
+            indexCheckboxQuestion
+          ]?.answer.includes(option.uuid)}
+          value={option.text}
+          choiceType={question.questionType}
+          placeholder="선택지를 입력해주세요"
+          onChangeCheck={() => choiceAnswerHandler(option.uuid)}
+          onChangeTextInput={(e) => choiceTextInputChange(e, indexOption)}
+          onClickRemoveOptionButton={() =>
+            removeOptionClickHandler(indexOption, option.uuid)
+          }
+        />
+      ));
       break;
-
     default:
       break;
   }
 
   return (
     <Fragment>
-      {markup}
+      <div {...props}>{markup}</div>
+
       {(question.questionType === 'radio' ||
-        question.questionType === 'checkbox') && (
-        <Button
-          size="small"
-          onClick={addOptionClickHandler}
-          style={{ marginTop: 6 }}
-        >
-          <Icon.PlusCircle size={18} />
-        </Button>
-      )}
+        question.questionType === 'checkbox') &&
+        !isCompleted && (
+          <Button
+            size="small"
+            onClick={addOptionClickHandler}
+            style={{ marginTop: 6 }}
+          >
+            <Icon.PlusCircle size={18} />
+          </Button>
+        )}
     </Fragment>
   );
 }

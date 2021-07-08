@@ -18,7 +18,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout: state => {
+    logout: (state) => {
       state.jwtToken = initialState.jwtToken;
       state.userProfile = initialState.userProfile;
       state.message = initialState.message;

@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { db, nowSecond } from '../utils/firebase';
 import { addForm } from '../store/slices/formSlice';
 import * as Icon from 'heroicons-react';
+import { Form } from '../model/Forms';
+import { _uuid } from '../utils/uuid';
 
 interface NavBarProps {
   logoSrc: string;
@@ -19,12 +21,24 @@ function NavBar({ logoSrc }: NavBarProps) {
   const createForm = () => {
     const now = nowSecond();
     const newForm = {
+      isCompleted: false,
       title: '',
       creator: uid,
       createdAt: now,
       editedAt: now,
-      questions: [],
-    };
+      questions: [
+        {
+          questionType: 'text',
+          title: '',
+          subtitle: '',
+          uuid: _uuid(),
+          options: [
+            { text: '', uuid: _uuid() },
+            { text: '', uuid: _uuid() },
+          ],
+        },
+      ],
+    } as Form;
     db.collection('forms')
       .add(newForm)
       .then((doc) => {

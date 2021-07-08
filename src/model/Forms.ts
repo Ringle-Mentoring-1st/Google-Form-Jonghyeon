@@ -1,5 +1,3 @@
-export type Questions = Question[];
-
 export interface Question {
   questionType: QuestionType;
   title: string;
@@ -16,10 +14,11 @@ export interface Option {
 }
 
 export interface Form {
+  isCompleted: boolean;
   title: string;
   creator: string;
   createdAt: number;
   editedAt: number;
-  questions: Questions;
+  questions: Question[];
   uuid?: string;
 }

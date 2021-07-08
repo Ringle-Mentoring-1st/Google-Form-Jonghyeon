@@ -5,8 +5,8 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import FormListPage from './pages/FormListPage';
 import FormCreatorPage from './pages/FormCreatorPage';
+import FormResultPage from './pages/FormResultPage';
 import FormResponsePage from './pages/FormResponsePage';
-import FormPage from './pages/FormPage';
 // Store
 import { useAppSelector } from './store/hooks';
 // Components
@@ -31,12 +31,12 @@ function Routes() {
             component={FormCreatorPage}
             exact
           />
+          <Route path="/form/:formId/result" component={FormResultPage} exact />
           <Route
             path="/form/:formId/response"
             component={FormResponsePage}
             exact
           />
-          <Route path="/form/:formId/" component={FormPage} exact />
         </Switch>
       </Container>
     </Router>

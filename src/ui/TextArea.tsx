@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 
 interface TextAreaProps {
@@ -8,7 +8,7 @@ interface TextAreaProps {
   placeholder?: string;
   fill?: boolean;
   [props: string]: any;
-  onChange(e: any): any;
+  onChange(e: ChangeEvent<HTMLTextAreaElement>): any;
 }
 
 function TextArea({
