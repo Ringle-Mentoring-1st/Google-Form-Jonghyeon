@@ -50,36 +50,46 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: 16px;
   transition: box-shadow 0.2s, opacity 0.2s;
   cursor: pointer;
-  background: ${({ color, variant }) => {
-    if (variant === 'outlined') return 0;
-    if (color === 'primary') return '#5f5cee';
-    if (color === 'secondary') return '#ebddaa';
-    if (color === 'default') return '#7c7c7c';
-  }};
-  color: ${({ color, variant }) => {
+  background: ${({ color, variant, theme }) => {
     if (variant === 'outlined') {
-      if (color === 'primary') return '#5f5cee';
-      if (color === 'secondary') return '#ebddaa';
-      if (color === 'default') return '#7c7c7c';
+      return 0;
+    } else {
+      if (color === 'primary') return theme.colors.primary;
+      if (color === 'secondary') return theme.colors.secondary;
+      if (color === 'default') return theme.colors.default;
     }
-    if (color === 'primary') return 'white';
-    if (color === 'default') return 'white';
   }};
-  box-shadow: ${({ color, variant }) => {
+  color: ${({ color, variant, theme }) => {
     if (variant === 'outlined') {
-      if (color === 'primary') return '0 0 0 2px #5f5cee inset';
-      if (color === 'secondary') return '0 0 0 2px #ebddaa inset';
-      if (color === 'default') return '0 0 0 2px #7c7c7c inset';
+      if (color === 'primary') return theme.colors.primary;
+      if (color === 'secondary') return theme.colors.secondary;
+      if (color === 'default') return theme.colors.default;
+    } else {
+      if (color === 'primary') return 'white';
+      if (color === 'default') return 'white';
+    }
+  }};
+  box-shadow: ${({ color, variant, theme }) => {
+    if (variant === 'outlined') {
+      if (color === 'primary')
+        return '0 0 0 2px ' + theme.colors.primary + ' inset';
+      if (color === 'secondary')
+        return '0 0 0 2px ' + theme.colors.secondary + ' inset';
+      if (color === 'default')
+        return '0 0 0 2px ' + theme.colors.default + ' inset';
     }
   }};
   border: 0;
 
   &:hover {
-    box-shadow: ${({ color, variant }) => {
+    box-shadow: ${({ color, variant, theme }) => {
       if (variant === 'outlined') {
-        if (color === 'primary') return '0 0 0 2px #5f5cee inset';
-        if (color === 'secondary') return '0 0 0 2px #ebddaa inset';
-        if (color === 'default') return '0 0 0 2px #7c7c7c inset';
+        if (color === 'primary')
+          return '0 0 0 2px ' + theme.colors.primary + ' inset';
+        if (color === 'secondary')
+          return '0 0 0 2px ' + theme.colors.secondary + ' inset';
+        if (color === 'default')
+          return '0 0 0 2px ' + theme.colors.default + ' inset';
       } else {
         return '0 0 11px rgba(33, 33, 33, 0.2)';
       }

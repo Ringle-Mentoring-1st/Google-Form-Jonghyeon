@@ -14,7 +14,7 @@ function Loading({ isLoading = false }: LoadingProps) {
 }
 
 const LoadingContainer = styled.div<LoadingProps>`
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -24,7 +24,7 @@ const LoadingContainer = styled.div<LoadingProps>`
   align-items: center;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.3);
-  display: ${props => (props.isLoading ? 'flex' : 'none')};
+  display: ${(props) => (props.isLoading ? 'flex' : 'none')};
 `;
 
 const spin = keyframes`
@@ -33,7 +33,7 @@ const spin = keyframes`
 `;
 
 const Loader = styled.div`
-  border: 5px solid #5f5cee;
+  border: ${({ theme }) => '5px solid ' + theme.colors.primary};
   border-top: 5px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   width: 25px;

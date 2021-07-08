@@ -5,9 +5,12 @@ import App from './App';
 // Redux
 import { store } from './store';
 import { Provider } from 'react-redux';
-// Redux-persist
+// Redux Persist
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
+// Styled Component
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -15,11 +18,13 @@ let persistor = persistStore(store);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>{' '}
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
