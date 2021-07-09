@@ -41,7 +41,7 @@ function FormItem({ form }: FormItem) {
         {form.isCompleted && (
           <ClipboardCopyButton
             isCompleted={form.isCompleted}
-            copyText={`http://formsaengformsa.com/form/${form.uuid}/response`}
+            copyText={`https://formsaengformsa.com/form/${form.uuid}/response`}
             color="secondary"
             size="small"
             fill

@@ -31,7 +31,8 @@ function FormResponsePage() {
   useEffect(() => {
     dispatch(clearResponse());
     if (!responserUuid) {
-      dispatch(setResponserUuid(_uuid()));
+      const newResponseUuid = _uuid();
+      dispatch(setResponserUuid(newResponseUuid));
     }
     dispatch(activateLoading());
     db.collection('forms')
@@ -94,6 +95,7 @@ function FormResponsePage() {
   }, []);
 
   const responseRef = db.collection('forms').doc(formId).collection('response');
+
   const submitClickHandler = () => {
     dispatch(activateLoading());
     const newResponse = { ...response };

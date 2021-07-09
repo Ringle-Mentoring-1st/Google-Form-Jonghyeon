@@ -12,11 +12,9 @@ export const responseSlice = createSlice({
   initialState,
   reducers: {
     clearResponse: (state) => {
-      state.responserUuid = initialState.responserUuid;
       state.questions = initialState.questions;
     },
     setResponse: (state, { payload }: PayloadAction<Response>) => {
-      state.responserUuid = payload.responserUuid;
       state.questions = payload.questions;
     },
     setResponserUuid: (state, { payload }: PayloadAction<ResponserUuid>) => {
