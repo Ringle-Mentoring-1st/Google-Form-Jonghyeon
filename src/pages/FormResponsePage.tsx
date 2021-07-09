@@ -69,8 +69,6 @@ function FormResponsePage() {
             newResponse.questions.push(newQuestion);
           });
 
-          dispatch(setResponse(newResponse));
-
           doc.ref
             .collection('response')
             .doc(responserUuid)
@@ -79,10 +77,14 @@ function FormResponsePage() {
               if (doc.exists) {
                 const newResponse = doc.data() as Response;
                 newResponse.responserUuid = doc.id;
+
                 dispatch(setResponse(newResponse));
+
                 setIsSubmitted(true);
               } else {
                 console.log('not exist');
+                newResponse.responserUuid = responserUuid;
+                dispatch(setResponse(newResponse));
               }
             })
             .catch((error) => {
@@ -187,6 +189,9 @@ function FormResponsePage() {
           <Icon.FolderAdd />
         </span>
       </Button>
+      <br />이 설문지는 <a href="https://formsaengformsa.com">폼생폼사</a>에서
+      만들었습니다 <br />
+      <small>Invalidation check version: 0.1</small>
     </div>
   );
 }
