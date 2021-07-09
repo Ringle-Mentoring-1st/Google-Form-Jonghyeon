@@ -35,7 +35,7 @@ function SignupPage() {
     setSignupPayload(cp);
   };
 
-  const isAgreeInfoChangeHandler = () => setIsAgreeInfo(prev => !prev);
+  const isAgreeInfoChangeHandler = () => setIsAgreeInfo((prev) => !prev);
 
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +63,7 @@ function SignupPage() {
       app
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.pw)
-        .then(user => {
+        .then((user) => {
           console.log(user);
           const uid = (app.auth().currentUser || {}).uid;
 
@@ -80,7 +80,7 @@ function SignupPage() {
                 email: email,
                 created: firebase.firestore.Timestamp.now().seconds,
               })
-              .then(ref => {
+              .then((ref) => {
                 const payload = {
                   uid: uid,
                   email: email,
@@ -103,7 +103,7 @@ function SignupPage() {
           }
           setLoading(false);
         })
-        .catch(error => {
+        .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
           console.log(errorCode, errorMessage);
@@ -146,7 +146,7 @@ function SignupPage() {
         <TextInput
           type="text"
           value={email}
-          onChange={e => onChange(e, 'email')}
+          onChange={(e) => onChange(e, 'email')}
           placeholder="이메일을 입력해주세요"
           fill
           style={{ marginBottom: 12 }}
@@ -154,7 +154,7 @@ function SignupPage() {
         <TextInput
           type="password"
           value={pw}
-          onChange={e => onChange(e, 'pw')}
+          onChange={(e) => onChange(e, 'pw')}
           placeholder="비밀번호를 입력해주세요"
           fill
           style={{ marginBottom: 12 }}
@@ -162,7 +162,7 @@ function SignupPage() {
         <TextInput
           type="text"
           value={nickName}
-          onChange={e => onChange(e, 'nickName')}
+          onChange={(e) => onChange(e, 'nickName')}
           placeholder="닉네임를 입력해주세요"
           fill
           style={{ marginBottom: 12 }}
@@ -170,10 +170,10 @@ function SignupPage() {
         <select
           name="pets"
           value={signupPath}
-          onChange={e => onChange(e, 'signupPath')}
+          onChange={(e) => onChange(e, 'signupPath')}
           style={{ marginBottom: 12 }}
         >
-          <option value="">어떤 경로로 커피챗을 알게 됐나요?</option>
+          <option value="">어떤 경로로 폼생폼사를 알게 됐나요?</option>
           <option value="ad">광고</option>
           <option value="search">검색</option>
           <option value="etc">기타</option>

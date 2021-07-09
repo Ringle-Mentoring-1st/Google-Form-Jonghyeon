@@ -16,6 +16,7 @@ export const responseSlice = createSlice({
     },
     setResponse: (state, { payload }: PayloadAction<Response>) => {
       state.questions = payload.questions;
+      state.responserUuid = payload.responserUuid;
     },
     setResponserUuid: (state, { payload }: PayloadAction<ResponserUuid>) => {
       if (!state.responserUuid) {

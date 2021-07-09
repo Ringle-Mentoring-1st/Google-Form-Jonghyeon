@@ -28,6 +28,8 @@ function FormResponsePage() {
   const isLoading = useAppSelector((state) => state.ui.isLoading);
   const dispatch = useAppDispatch();
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   useEffect(() => {
     dispatch(clearResponse());
     if (!responserUuid) {
@@ -75,7 +77,10 @@ function FormResponsePage() {
             .get()
             .then((doc) => {
               if (doc.exists) {
-                dispatch(setResponse(doc.data() as Response));
+                const newResponse = doc.data() as Response;
+                newResponse.responserUuid = doc.id;
+                dispatch(setResponse(newResponse));
+                setIsSubmitted(true);
               } else {
                 console.log('not exist');
               }
@@ -105,12 +110,48 @@ function FormResponsePage() {
       .then(() => {
         alert('성공적으로 제출하였습니다.🥳');
         dispatch(deactivateLoading());
+        setIsSubmitted(true);
       })
       .catch((error) => {
         dispatch(deactivateLoading());
         console.log(error);
       });
   };
+
+  if (isSubmitted) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        <div
+          style={{
+            background: 'white',
+            padding: '16px 30px',
+            borderRadius: 16,
+            marginBottom: 16,
+          }}
+        >
+          <h2>응답이 제출되었습니다 🥳</h2>
+          두번 응답하실 수 없습니다
+        </div>
+        <a href="https://formsaengformsa.com">
+          <Button color="primary" isCompleted={true}>
+            폼생폼사에서 나도 설문지 만들기
+          </Button>
+        </a>
+      </div>
+    );
+  }
 
   if (!form.isCompleted) {
     return <div>아직 설문지가 제작 중입니다.</div>;
