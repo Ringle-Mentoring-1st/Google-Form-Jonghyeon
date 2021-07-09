@@ -8,11 +8,15 @@ export const Paper = styled.div`
 `;
 
 export const QuestionCard = styled.li`
-  background: white;
+  background: #f9f9f9;
   border-radius: 16px;
   margin-bottom: 16px;
   box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  transition: all 0.2s ease;
+  &:hover {
+    background: white;
+  }
 `;
 
 export const QuestionContent = styled.div`

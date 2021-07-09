@@ -5,6 +5,7 @@ import moment from 'moment';
 import 'moment/locale/ko';
 import * as Icon from 'heroicons-react';
 import ClipboardCopyButton from './ClipboardCopyButton';
+import theme from '../styles/theme';
 
 interface FormItem {
   form: Form;
@@ -24,12 +25,12 @@ function FormItem({ form }: FormItem) {
     <StyledItemContainer>
       <StyledItemCard onClick={clickItemHandler} isCompleted={form.isCompleted}>
         <div style={{ display: 'flex' }}>
-          <Icon.DocumentText size={30} style={{ color: 'lightgray' }} />
           <div>
-            <h2 style={{ letterSpacing: -0.5 }}>
+            {' '}
+            <Icon.PencilAlt size={30} style={{ color: 'lightgray' }} />
+            <h3 style={{ letterSpacing: -0.5 }}>
               {form.title ? form.title : '무제'}
-            </h2>
-
+            </h3>
             {form.isCompleted ? (
               <h6>{moment(new Date(form.editedAt * 1000)).fromNow()}에 완성</h6>
             ) : (

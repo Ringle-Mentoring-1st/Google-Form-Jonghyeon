@@ -9,18 +9,18 @@ import Loading from '../ui/Loading';
 import { db } from '../utils/firebase';
 
 function FormListPage() {
-  const uid = useAppSelector(state => state.user.userProfile.uid);
+  const uid = useAppSelector((state) => state.user.userProfile.uid);
   const dispatch = useAppDispatch();
-  const forms = useAppSelector(state => state.form.list);
-  const isLoading = useAppSelector(state => state.ui.isLoading);
+  const forms = useAppSelector((state) => state.form.list);
+  const isLoading = useAppSelector((state) => state.ui.isLoading);
   useEffect(() => {
     dispatch(activateLoading());
     db.collection('forms')
       .where('creator', '==', uid)
       .get()
-      .then(docs => {
+      .then((docs) => {
         const newForms: Form[] = [];
-        docs.forEach(doc => {
+        docs.forEach((doc) => {
           const newForm = doc.data() as Form;
           newForm.uuid = doc.id;
           newForms.push(newForm);
@@ -32,13 +32,25 @@ function FormListPage() {
     console.log(forms);
   }, []);
 
+  const formIsCompleted = forms.filter((form) => form.isCompleted === true);
+  const formIsNotCompleted = forms.filter((form) => form.isCompleted === false);
+
   return (
     <div>
-      <h1>내 설문지들</h1>
+      <Loading isLoading={isLoading} />
+      <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
+        {formIsCompleted.length > 0 && '공개된 설문지'}
+      </h2>
       <FormItemContainer>
-        <Loading isLoading={isLoading} />
-
-        {forms.map(form => (
+        {formIsCompleted.map((form) => (
+          <FormItem key={form.uuid} form={form} />
+        ))}
+      </FormItemContainer>
+      <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
+        {formIsNotCompleted.length > 0 && '작성중인 설문지'}
+      </h2>
+      <FormItemContainer>
+        {formIsNotCompleted.map((form) => (
           <FormItem key={form.uuid} form={form} />
         ))}
       </FormItemContainer>

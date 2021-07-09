@@ -50,7 +50,6 @@ const StyledTextInputContainer = styled.div<TextInputProps>`
   flex: ${({ fill }) => (fill ? 1 : '')};
   flex-direction: column;
   border-radius: 16px;
-  background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
 `;
 
@@ -62,6 +61,16 @@ const StyledTextInput = styled.input<TextInputProps>`
   outline: 0;
   font-size: 16px;
   min-width: 200px;
+  transition: all 0.2s ease;
+
+  background-color: rgba(0, 0, 0, 0.04);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+  }
+  &:focus {
+    background-color: rgba(0, 0, 0, 0.01);
+  }
 `;
 
 const StyledTextInputUnderBar = styled.div<{ focus: boolean }>`
@@ -70,7 +79,7 @@ const StyledTextInputUnderBar = styled.div<{ focus: boolean }>`
   right: 0;
   bottom: 0;
   height: 2px;
-  background: rgba(98, 0, 255, 0.3);
+  background: ${({ theme }) => theme.colors.primary};
   width: ${({ focus }) => (focus ? '100%' : '0%')};
   transition: 0.1s all linear;
   margin: auto;

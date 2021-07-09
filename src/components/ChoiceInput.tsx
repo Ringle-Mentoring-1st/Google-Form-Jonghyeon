@@ -29,12 +29,6 @@ function ChoiceInput({
 
   return (
     <ChoiceInputContainer>
-      {!isCompleted && (
-        <Button size="small" onClick={onClickRemoveOptionButton}>
-          <Icon.MinusCircle size={18} />
-        </Button>
-      )}
-
       <input
         id={id}
         type={choiceType}
@@ -47,10 +41,18 @@ function ChoiceInput({
           placeholder={placeholder}
           fill
           onChange={onChangeTextInput}
-          style={{ marginTop: 6 }}
         />
       ) : (
         <text>{value}</text>
+      )}
+      {!isCompleted && (
+        <Button
+          size="small"
+          onClick={onClickRemoveOptionButton}
+          style={{ marginLeft: 6 }}
+        >
+          <Icon.MinusCircle size={18} />
+        </Button>
       )}
     </ChoiceInputContainer>
   );
@@ -59,6 +61,7 @@ function ChoiceInput({
 export default ChoiceInput;
 
 const ChoiceInputContainer = styled.div`
+  margin-top: 6px;
   display: flex;
   align-items: center;
 `;

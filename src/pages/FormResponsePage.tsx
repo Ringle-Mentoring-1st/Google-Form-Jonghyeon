@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Form } from '../model/Forms';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { clearForm, setForm } from '../store/slices/formSlice';
+import { setForm } from '../store/slices/formSlice';
 import { activateLoading, deactivateLoading } from '../store/slices/uiSlice';
 import Loading from '../ui/Loading';
 import { Paper } from '../ui/StyledComponents';

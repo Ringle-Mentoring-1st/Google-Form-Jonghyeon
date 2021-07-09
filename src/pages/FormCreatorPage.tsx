@@ -1,13 +1,14 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Question } from '../model/Forms';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import {
-  addQuestion,
-  clearForm,
-  setForm,
-  setFormTitle,
-} from '../store/slices/formSlice';
+import { addQuestion, setForm, setFormTitle } from '../store/slices/formSlice';
 import { activateLoading, deactivateLoading } from '../store/slices/uiSlice';
 import Button from '../ui/Button';
 import Loading from '../ui/Loading';
@@ -19,6 +20,11 @@ import { _uuid } from '../utils/uuid';
 import { Paper } from '../ui/StyledComponents';
 
 function FormCreatorPage() {
+  const endRef = useRef<HTMLDivElement>(null);
+  const scrollToBottom = () => {
+    endRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const { formId }: { formId: string } = useParams();
   const uid = useAppSelector((state) => state.user.userProfile.uid);
   const form = useAppSelector((state) => state.form.form);
@@ -27,7 +33,6 @@ function FormCreatorPage() {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(clearForm());
     dispatch(activateLoading());
     db.collection('forms')
       .doc(formId)
@@ -60,7 +65,6 @@ function FormCreatorPage() {
     document.addEventListener('keydown', handleCmdCtrlS);
     return () => {
       document.removeEventListener('keydown', handleCmdCtrlS);
-      dispatch(clearForm());
     };
   }, []);
 
@@ -80,6 +84,9 @@ function FormCreatorPage() {
       ],
     } as Question;
     dispatch(addQuestion(newQuestion));
+    setTimeout(() => {
+      scrollToBottom();
+    }, 1);
   };
 
   const thisFormRef = db.collection('forms').doc(formId);
@@ -207,9 +214,10 @@ function FormCreatorPage() {
               <Icon.BookOpen />
             </span>
           </Button>
-          <div> Ctrl(Cmd)+S 로 빠르게 저장할 수 있습니다</div>
+          <div>Ctrl(Cmd)+S 로 빠르게 저장할 수 있습니다</div>
         </>
       )}
+      <div ref={endRef} style={{ marginBottom: 100 }} />
     </div>
   );
 }
