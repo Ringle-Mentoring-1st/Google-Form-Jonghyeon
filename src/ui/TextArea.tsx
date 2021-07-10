@@ -36,7 +36,7 @@ function TextArea({
         placeholder={placeholder}
         fill
         onKeyUp={(e: any) => {
-          if (e.keyCode == 27) e.target.blur();
+          if (e.keyCode === 27) e.target.blur();
         }}
       />
       <StyledTextAreaUnderBar focus={focus} />
