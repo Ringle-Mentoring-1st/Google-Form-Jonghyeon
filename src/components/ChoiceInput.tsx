@@ -157,7 +157,7 @@ const Styled = styled.div<{ type: string; checked: boolean }>`
       }};
       border-radius: ${({ type }) => {
         if (type === 'checkbox') {
-          return '0px';
+          return '6px';
         } else if (type === 'radio') {
           return '999px';
         }
