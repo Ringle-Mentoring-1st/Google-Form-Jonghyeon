@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../ui/Button';
 import TextInput from '../ui/TextInput';
@@ -27,10 +28,20 @@ function ChoiceInput({
 }: ChoiceInputProps) {
   const isCompleted = useAppSelector((state) => state.form.form.isCompleted);
 
+  const fakeFocusRef = useRef<HTMLInputElement>(null);
+
   return (
     <ChoiceInputContainer>
       {isCompleted && (
-        <Styled onClick={onChangeCheck} type={choiceType} checked={isSelected}>
+        <Styled
+          onClick={() => {
+            onChangeCheck!();
+            fakeFocusRef.current?.focus();
+          }}
+          type={choiceType}
+          checked={isSelected}
+        >
+          <input type="checkbox" ref={fakeFocusRef} style={{ width: 0 }} />
           <div className="choice-container" id={id}>
             <div className="choice">
               {choiceType === 'checkbox' && (

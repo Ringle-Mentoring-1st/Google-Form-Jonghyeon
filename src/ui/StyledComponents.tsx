@@ -8,14 +8,19 @@ export const Paper = styled.div`
 `;
 
 export const QuestionCard = styled.li`
+  padding-left: 8px;
   background: #f9f9f9;
   border-radius: 16px;
   margin-bottom: 16px;
-  box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1), inset 0;
   overflow: hidden;
   transition: all 0.2s ease;
   &:hover {
     background: white;
+  }
+  &:focus-within {
+    box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1),
+      inset 44px 0 0 -36px ${({ theme }) => theme.colors.primary};
   }
 `;
 
