@@ -2,14 +2,14 @@ import styled from 'styled-components';
 
 export const Paper = styled.div`
   padding: 16px;
-  background: #fafafa;
+  background: #f3f3f3;
   border-radius: 24px;
   box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1);
 `;
 
 export const QuestionCard = styled.li`
   padding-left: 8px;
-  background: #f9f9f9;
+  background: #fafafa;
   border-radius: 16px;
   margin-bottom: 16px;
   box-shadow: 0px 12px 32px -12px rgba(0, 0, 0, 0.1), inset 0;

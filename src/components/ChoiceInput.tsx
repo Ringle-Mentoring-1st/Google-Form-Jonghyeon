@@ -105,13 +105,13 @@ const ChoiceInputContainer = styled.div`
 const Styled = styled.div<{ type: string; checked: boolean }>`
   flex: 1;
   font-weight: 700;
-  background: ${({ theme }) => theme.colors.gray100};
+  background: ${({ theme }) => theme.colors.gray200};
   display: flex;
   align-items: center;
   padding: 12px;
   border-radius: 16px;
   &:hover {
-    background: ${({ theme }) => theme.colors.gray200};
+    background: ${({ theme }) => theme.colors.gray300};
   }
   transition: all 0.2s ease-in-out;
 
@@ -139,13 +139,8 @@ const Styled = styled.div<{ type: string; checked: boolean }>`
     margin-right: 6px;
 
     &:hover {
-      box-shadow: 0px 0px 0px 0px
-          ${({ theme, checked }) =>
-            checked ? theme.colors.white : theme.colors.gray300},
-        inset 0px 0px 0px 32px
-          ${({ theme, checked }) =>
-            checked ? theme.colors.white : theme.colors.gray300};
-      transition: all 0.04s ease-in-out;
+      border-color: ${({ theme, checked }) =>
+        checked ? theme.colors.primary : theme.colors.gray400};
     }
 
     > .choice {
@@ -154,7 +149,7 @@ const Styled = styled.div<{ type: string; checked: boolean }>`
       align-items: center;
       width: ${({ checked, type }) => {
         if (type === 'checkbox') {
-          return checked === true ? '90px' : '0px';
+          return checked === true ? '100px' : '0px';
         } else if (type === 'radio') {
           return checked === true ? '14px' : '0px';
         }

@@ -52,7 +52,7 @@ const colors = {
   white: '#FFFFFF',
   gray100: '#fafafa',
   gray200: '#efefef',
-  gray300: '#d0d0d0',
+  gray300: '#e0e0e0',
   gray400: '#767676',
   gray500: '#767676',
   gray600: '#767676',
