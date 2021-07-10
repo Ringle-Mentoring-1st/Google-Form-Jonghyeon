@@ -7,13 +7,18 @@ import { getFormList } from '../store/slices/formSlice';
 import { activateLoading, deactivateLoading } from '../store/slices/uiSlice';
 import Loading from '../ui/Loading';
 import { db } from '../utils/firebase';
+import { useHistory } from 'react-router-dom';
 
 function FormListPage() {
   const uid = useAppSelector((state) => state.user.userProfile.uid);
   const dispatch = useAppDispatch();
   const forms = useAppSelector((state) => state.form.list);
   const isLoading = useAppSelector((state) => state.ui.isLoading);
+  const history = useHistory();
   useEffect(() => {
+    if (!uid) {
+      history.push('/login');
+    }
     dispatch(activateLoading());
     db.collection('forms')
       .where('creator', '==', uid)
