@@ -93,6 +93,7 @@ function MarkupSwitchByType({
       );
       markup = radioOptions.map((option, indexOption) => (
         <ChoiceInput
+          key={indexOption}
           isSelected={
             response.questions[indexRadioQuestion]?.answer[0] === option.uuid
           }
@@ -114,6 +115,7 @@ function MarkupSwitchByType({
       );
       markup = checkboxOptions.map((option, indexOption) => (
         <ChoiceInput
+          key={indexOption}
           isSelected={response.questions[
             indexCheckboxQuestion
           ]?.answer.includes(option.uuid)}
