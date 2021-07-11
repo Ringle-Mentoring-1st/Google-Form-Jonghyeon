@@ -156,7 +156,27 @@ function FormResponsePage() {
   }
 
   if (!form.isCompleted) {
-    return <div>아직 설문지가 제작 중입니다.</div>;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 20,
+          height: '75vh',
+          color: 'gray',
+        }}
+      >
+        <span>
+          <Icon.DocumentSearch
+            size={80}
+            color="lightgray"
+          ></Icon.DocumentSearch>
+        </span>
+        아직 설문지가 제작 중입니다.
+      </div>
+    );
   }
 
   return (
