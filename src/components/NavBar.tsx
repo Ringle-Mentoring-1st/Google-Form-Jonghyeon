@@ -64,7 +64,7 @@ function NavBar({ logoSrc }: NavBarProps) {
           }}
         >
           <Link aria-label="logo" to="/form/list">
-            <img src={logoSrc} alt="logo" style={{ height: '100%' }} />
+            <img src={logoSrc} alt="logo" style={{ height: 60, width: 60 }} />
           </Link>
           <ul
             style={{
