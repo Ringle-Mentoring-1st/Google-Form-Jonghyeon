@@ -42,6 +42,7 @@ export const TopWindow = styled.div`
 
 export const QuestionTitleDevider = styled.div`
   display: flex;
+  align-items: flex-start;
 `;
 
 export const QuestionTitle = styled.div`
@@ -49,21 +50,66 @@ export const QuestionTitle = styled.div`
   text-align: left;
 `;
 
-export const TypeSelect = styled.select`
-  appearance: none;
-  background-color: white;
-  border: 2px solid lightgray;
+export const TypeSelectContainer = styled.div`
+  position: relative;
+  background: ${({ theme }) => theme.colors.gray200};
   border-radius: 16px;
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: inherit;
-  line-height: inherit;
-  outline: none;
-  height: 40px;
+  overflow: hidden;
+  transition: all 0.2s;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.gray300};
+  }
 `;
+
+export const TypeSelect = styled.select`
+  background: none;
+  border: 0;
+  padding: 12px 48px 12px 16px;
+  font-size: 16px;
+  font-weight: 900;
+  color: ${({ theme }) => theme.colors.black};
+  outline: none;
+  appearance: none;
+`;
+
 export const TypeOption = styled.option`
   appearance: none;
+`;
+
+export const TypeSelectArrowCustom = styled.div`
+  position: absolute;
+  display: block;
+  background: ${({ theme }) => theme.colors.gray300};
+  width: 36px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    --size: 8px;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform: translate(-55%, -50%);
+  }
+
+  &::before {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-bottom: var(--size) solid ${({ theme }) => theme.colors.gray400};
+    top: 37%;
+  }
+
+  &::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid ${({ theme }) => theme.colors.gray400};
+    top: 63%;
+  }
 `;
 
 export default {

@@ -53,7 +53,7 @@ const colors = {
   gray100: '#fafafa',
   gray200: '#efefef',
   gray300: '#e0e0e0',
-  gray400: '#767676',
+  gray400: '#c0c0c0',
   gray500: '#767676',
   gray600: '#767676',
   gray700: '#767676',

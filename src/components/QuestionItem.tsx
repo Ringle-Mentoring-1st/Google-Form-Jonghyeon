@@ -22,6 +22,8 @@ import {
   TopWindow,
   TypeOption,
   TypeSelect,
+  TypeSelectArrowCustom,
+  TypeSelectContainer,
 } from '../ui/StyledComponents';
 
 interface QuestionProps {
@@ -79,14 +81,17 @@ function QuestionItem({ question, index }: QuestionProps) {
               style={{ marginTop: 8 }}
             />
           </QuestionTitle>
-          <TypeSelect
-            value={question.questionType}
-            onChange={questionTypeHandleChange}
-          >
-            <TypeOption value="text">주관식 답변</TypeOption>
-            <TypeOption value="radio">단일 선택</TypeOption>
-            <TypeOption value="checkbox">다중 선택</TypeOption>
-          </TypeSelect>
+          <TypeSelectContainer style={{ marginLeft: 12 }}>
+            <TypeSelect
+              value={question.questionType}
+              onChange={questionTypeHandleChange}
+            >
+              <TypeOption value="text">주관식 답변</TypeOption>
+              <TypeOption value="radio">단일 선택</TypeOption>
+              <TypeOption value="checkbox">다중 선택</TypeOption>
+            </TypeSelect>
+            <TypeSelectArrowCustom />
+          </TypeSelectContainer>
         </QuestionTitleDevider>
         {/* 질문 타입별 마크업 */}
         <MarkupSwitchByType
