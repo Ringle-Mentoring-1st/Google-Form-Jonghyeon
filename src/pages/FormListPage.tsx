@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import FormItem from '../components/FormItem';
 import { Form } from '../model/Forms';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getFormList } from '../store/slices/formSlice';
+import { clearFormList, getFormList } from '../store/slices/formSlice';
 import { activateLoading, deactivateLoading } from '../store/slices/uiSlice';
 import Loading from '../ui/Loading';
 import { db } from '../utils/firebase';
 import { useHistory } from 'react-router-dom';
+import * as Icon from 'heroicons-react';
+import LoadingFormList from '../ui/LoadingFormList';
 
 function FormListPage() {
   const uid = useAppSelector((state) => state.user.userProfile.uid);
@@ -19,6 +21,7 @@ function FormListPage() {
     if (!uid) {
       history.push('/login');
     }
+    dispatch(clearFormList());
     dispatch(activateLoading());
     db.collection('forms')
       .where('creator', '==', uid)
@@ -42,23 +45,51 @@ function FormListPage() {
 
   return (
     <div>
-      <Loading isLoading={isLoading} />
-      <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
-        {formIsCompleted.length > 0 && '공개된 설문지'}
-      </h2>
-      <FormItemContainer>
-        {formIsCompleted.map((form) => (
-          <FormItem key={form.uuid} form={form} />
-        ))}
-      </FormItemContainer>
-      <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
-        {formIsNotCompleted.length > 0 && '작성중인 설문지'}
-      </h2>
-      <FormItemContainer>
-        {formIsNotCompleted.map((form) => (
-          <FormItem key={form.uuid} form={form} />
-        ))}
-      </FormItemContainer>
+      {
+        // loading
+        isLoading ? (
+          <FormItemContainer>
+            <LoadingFormList></LoadingFormList>
+          </FormItemContainer>
+        ) : !forms.length ? (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 20,
+              height: '75vh',
+              color: 'gray',
+            }}
+          >
+            <span>
+              <Icon.DocumentAdd size={80} color="lightgray"></Icon.DocumentAdd>
+            </span>
+            위 버튼을 눌러서
+            <br />새 설문지를 만드세요!
+          </div>
+        ) : (
+          <>
+            <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
+              {formIsCompleted.length > 0 && '공개된 설문지'}
+            </h2>
+            <FormItemContainer>
+              {formIsCompleted.map((form) => (
+                <FormItem key={form.uuid} form={form} />
+              ))}
+            </FormItemContainer>
+            <h2 style={{ marginTop: 30, textAlign: 'left', marginLeft: 28 }}>
+              {formIsNotCompleted.length > 0 && '작성중인 설문지'}
+            </h2>
+            <FormItemContainer>
+              {formIsNotCompleted.map((form) => (
+                <FormItem key={form.uuid} form={form} />
+              ))}
+            </FormItemContainer>
+          </>
+        )
+      }
     </div>
   );
 }

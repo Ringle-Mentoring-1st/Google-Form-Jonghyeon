@@ -28,6 +28,9 @@ export const formSlice = createSlice({
       state.list = initialState.list;
       state.form = initialState.form;
     },
+    clearFormList: (state) => {
+      state.list = initialState.list;
+    },
     getFormList: (state, { payload }: PayloadAction<Form[]>) => {
       const sorted = payload.sort((a, b) => b.editedAt - a.editedAt);
       state.list = [...sorted];
@@ -108,6 +111,7 @@ export const formSlice = createSlice({
 
 export const {
   clearForm,
+  clearFormList,
   getFormList,
   addForm,
   setForm,
