@@ -8,7 +8,7 @@ export interface Response {
 export interface QuestionResponse {
   uuid: string;
   type: QuestionType;
-  answer: string[] | string;
+  answer: string[];
   textAnswer: string;
 }
 

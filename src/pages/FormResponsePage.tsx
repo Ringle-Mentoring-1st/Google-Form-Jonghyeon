@@ -31,13 +31,13 @@ function FormResponsePage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    dispatch(activateLoading());
     dispatch(clearResponse());
     if (!responserUuid) {
       responserUuid = _uuid();
       dispatch(setResponserUuid(responserUuid));
     }
     const newResponse = { responserUuid, questions: [] } as Response;
-    dispatch(activateLoading());
     db.collection('forms')
       .doc(formId)
       .get()
@@ -67,8 +67,7 @@ function FormResponsePage() {
             newResponse.questions.push(newQuestion);
           });
         } else {
-          const newForm = { ...form };
-          dispatch(setForm(newForm));
+          console.log('not exists');
         }
       })
       .then(() => {
@@ -152,7 +151,7 @@ function FormResponsePage() {
     );
   }
 
-  if (!form.isCompleted) {
+  if (form.isCompleted === false) {
     return (
       <div
         style={{
