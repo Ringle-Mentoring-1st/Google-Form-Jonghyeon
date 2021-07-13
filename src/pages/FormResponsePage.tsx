@@ -15,6 +15,7 @@ import {
   setResponserUuid,
   clearResponse,
 } from '../store/slices/responseSlice';
+import { clearForm } from '../store/slices/formSlice';
 import Button from '../ui/Button';
 import * as Icon from 'heroicons-react';
 import { Response, QuestionResponse } from '../model/Response';
@@ -31,8 +32,9 @@ function FormResponsePage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(activateLoading());
+    dispatch(clearForm());
     dispatch(clearResponse());
+    dispatch(activateLoading());
     if (!responserUuid) {
       responserUuid = _uuid();
       dispatch(setResponserUuid(responserUuid));
