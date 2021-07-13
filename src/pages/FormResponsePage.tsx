@@ -20,6 +20,7 @@ import Button from '../ui/Button';
 import * as Icon from 'heroicons-react';
 import { Response, QuestionResponse } from '../model/Response';
 import { Question } from '../model/Forms';
+import LoadingFormResponse from '../ui/LoadingFormResponse';
 
 function FormResponsePage() {
   const { formId }: { formId: string } = useParams();
@@ -151,6 +152,10 @@ function FormResponsePage() {
         </a>
       </div>
     );
+  }
+
+  if (isLoading === true) {
+    return <Paper>{isLoading && <LoadingFormResponse />}</Paper>;
   }
 
   if (form.isCompleted === false) {
