@@ -15,7 +15,7 @@ function TextArea({
   type,
   value,
   placeholder,
-  fill = false,
+  fill,
   onChange,
   ...props
 }: TextAreaProps) {
@@ -34,7 +34,6 @@ function TextArea({
         type={type}
         value={value}
         placeholder={placeholder}
-        fill
         onKeyUp={(e: any) => {
           if (e.keyCode === 27) e.target.blur();
         }}

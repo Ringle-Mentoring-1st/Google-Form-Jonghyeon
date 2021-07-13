@@ -24,7 +24,7 @@ function FormResponsePage() {
   const { formId }: { formId: string } = useParams();
   const response = useAppSelector((state) => state.response);
   const form = useAppSelector((state) => state.form.form);
-  const responserUuid = useAppSelector((state) => state.response.responserUuid);
+  let responserUuid = useAppSelector((state) => state.response.responserUuid);
   const isLoading = useAppSelector((state) => state.ui.isLoading);
   const dispatch = useAppDispatch();
 
@@ -33,9 +33,10 @@ function FormResponsePage() {
   useEffect(() => {
     dispatch(clearResponse());
     if (!responserUuid) {
-      const newResponseUuid = _uuid();
-      dispatch(setResponserUuid(newResponseUuid));
+      responserUuid = _uuid();
+      dispatch(setResponserUuid(responserUuid));
     }
+    const newResponse = { responserUuid, questions: [] } as Response;
     dispatch(activateLoading());
     db.collection('forms')
       .doc(formId)
@@ -45,8 +46,6 @@ function FormResponsePage() {
           const newForm = doc.data() as Form;
           newForm.uuid = doc.id;
           dispatch(setForm(newForm));
-
-          const newResponse = { responserUuid, questions: [] } as Response;
 
           newForm.questions.forEach((question: Question) => {
             const newQuestion = {} as QuestionResponse;
@@ -65,36 +64,34 @@ function FormResponsePage() {
               default:
                 break;
             }
-
             newResponse.questions.push(newQuestion);
           });
-
-          doc.ref
-            .collection('response')
-            .doc(responserUuid)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                const newResponse = doc.data() as Response;
-                newResponse.responserUuid = doc.id;
-
-                dispatch(setResponse(newResponse));
-
-                setIsSubmitted(true);
-              } else {
-                console.log('not exist');
-                newResponse.responserUuid = responserUuid;
-                dispatch(setResponse(newResponse));
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
         } else {
           const newForm = { ...form };
           dispatch(setForm(newForm));
         }
-        dispatch(deactivateLoading());
+      })
+      .then(() => {
+        dispatch(setResponse(newResponse));
+      })
+      .then(() => {
+        db.collection('forms')
+          .doc(formId)
+          .collection('response')
+          .doc(responserUuid)
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              setIsSubmitted(true);
+            } else {
+              console.log('not exist');
+            }
+            dispatch(deactivateLoading());
+          })
+          .catch((error) => {
+            console.log(error);
+            dispatch(deactivateLoading());
+          });
       })
       .catch(() => {
         dispatch(deactivateLoading());
@@ -187,6 +184,7 @@ function FormResponsePage() {
         <ul>
           {form.questions.map((question, index) => (
             <QuestionItemRespondent
+              key={question.uuid}
               question={question}
               index={index}
             ></QuestionItemRespondent>
@@ -211,7 +209,9 @@ function FormResponsePage() {
       </Button>
       <br />이 설문지는 <a href="https://formsaengformsa.com">폼생폼사</a>에서
       만들었습니다 <br />
-      <small>Invalidation check version: 0.1</small>
+      <small>
+        Invalidation check version: 0.1 <br /> responser: {responserUuid}
+      </small>
     </div>
   );
 }

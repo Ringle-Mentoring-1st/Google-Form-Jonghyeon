@@ -58,7 +58,7 @@ export const responseSlice = createSlice({
           state.questions[indexQuestion].answer = [optionUuid];
           break;
         case 'checkbox':
-          const answer = state.questions[indexQuestion].answer;
+          const answer = state.questions[indexQuestion].answer as string[];
           const indexOptionUuid = answer.indexOf(optionUuid);
           if (indexOptionUuid === -1) {
             answer.push(optionUuid);
