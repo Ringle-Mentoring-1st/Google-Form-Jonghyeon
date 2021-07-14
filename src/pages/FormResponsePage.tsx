@@ -33,9 +33,9 @@ function FormResponsePage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    dispatch(activateLoading());
     dispatch(clearForm());
     dispatch(clearResponse());
-    dispatch(activateLoading());
     if (!responserUuid) {
       responserUuid = _uuid();
       dispatch(setResponserUuid(responserUuid));
@@ -119,6 +119,14 @@ function FormResponsePage() {
       });
   };
 
+  if (isLoading === true) {
+    return (
+      <Paper>
+        <LoadingFormResponse />
+      </Paper>
+    );
+  }
+
   if (isSubmitted) {
     return (
       <div
@@ -152,10 +160,6 @@ function FormResponsePage() {
         </a>
       </div>
     );
-  }
-
-  if (isLoading === true) {
-    return <Paper>{isLoading && <LoadingFormResponse />}</Paper>;
   }
 
   if (form.isCompleted === false) {
